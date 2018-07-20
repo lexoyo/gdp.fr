@@ -1,0 +1,60 @@
+.cart_item_remove input{
+	display:none;
+}
+.cart_item_remove a.cart_item_delete{
+cursor:pointer;
+display:block;
+float:right;
+height:18px;
+position:relative;
+right:5px;
+width:18px;
+margin-right:24px;
+margin-top:-11px;
+}
+
+.remove_grey
+{
+background:url("i/remove_grey.png") no-repeat scroll left center transparent;
+}
+.remove_blue
+{
+background:url("i/remove_blue.png") no-repeat scroll left center transparent;
+}
+
+.jqzoom{
+  float:left;
+  position:relative;
+  padding:0px;
+  cursor:pointer;
+}
+
+.jqzoom img{
+  float:left;
+}
+div.jqZoomPup {
+  z-index: 10;
+  visibility: hidden;
+  position: absolute;
+  top:0px;
+  left:0px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #aaa;
+  background: #ffffff url(i/zoom.gif) 50% top  no-repeat;;
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  filter: alpha(Opacity=50);
+}
+div.zoomdiv {
+  z-index: 100;
+  position: relative;
+	margin:0 auto 36px;
+  width: 200px;
+  height: 200px;
+  background: #000;
+  text-align: center;
+  overflow: hidden;
+	border:1px solid #EBEBEB;
+} 

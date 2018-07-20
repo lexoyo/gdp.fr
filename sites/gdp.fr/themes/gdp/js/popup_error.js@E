@@ -1,0 +1,87 @@
+$(document).ready(function() {
+
+  if(Drupal.settings.messages){
+    displayMessages();
+  }
+  
+});
+
+function displayMessages(m) {
+  
+  if ( m == undefined ) {
+    m = Drupal.settings.messages;
+  }  
+
+  var $wrapper = $('.box-info-wrapper');
+  $wrapper.find('.box-info-text').html('').attr({style:"padding-left:40px;padding-right:40px;padding-top:0px;padding-bottom:20px;"});
+  var $msg = false;
+   
+  // Si on a au moins un message de type 'title' on construit la liste des erreurs
+  if(m['title']){
+    if(m['title'].length != 0){
+	var $wrapper_title = $('<div class="box-info-title"/>');
+	$wrapper_title.attr({style:"text-align:left;font-size:15px;"});
+	var $h2 = $('<h1/>');
+		$wrapper_title.append($h2.html(m['title']));
+	}
+	$wrapper.find(".box-info-text").append($wrapper_title);
+        $msg = true;
+  }
+  // Si on a au moins un message de type 'error' on construit la liste des erreurs 
+  if(m['error']){
+    if(m['error'].lenght != 0){
+      var $wrapper_error = $('<div class="box-info-error"/>');
+      var $ul = $('<ul/>');
+      $ul.attr({style:"padding-left:0px;"});
+      $.each(m['error'], function(i,elmt){
+        $ul.append($('<li/>').html(m['error'][i]));
+      });
+      $wrapper_error.append($ul);
+      $wrapper.find(".box-info-text").append($wrapper_error);
+      $msg = true;
+    }
+  }     
+  
+  // Si on a au moins un message de type 'error' on construit la liste des status 
+  if(m['status']){
+    if(m['status'].lenght != 0){
+      var $wrapper_status = $('<div class="box-info-status"/>');
+      var $ul = $('<ul/>');
+      $ul.attr({style:"padding-left:0px;"});
+      $.each(m['status'], function(i,elmt){
+        $ul.append($('<li/>').html(m['status'][i]));
+      });
+      $wrapper_status.append($ul);
+      $wrapper.find(".box-info-text").append($wrapper_status);
+      $msg = true;
+    }
+  }
+  
+  // On affiche le message si besoin
+  if($msg){
+    $.blockUI({
+      message: $wrapper,
+      overlayCSS: { 
+		backgroundColor: '#000',
+        	opacity:          0.6,
+        	cursor:          'normal'
+		 },      
+      showOverlay: true,
+      css: {
+        cursor: "normal",
+        top:  ($(window).height() - 260) /2 + 'px',
+        left: ($(window).width() - 510) /2 + 'px', 
+        width: "816px",
+        height: "512px",
+        background: "none",
+        border: "none"
+      }
+    });
+
+    $wrapper.find(".box-info-close-wrapper").click(function() {
+      $.unblockUI();
+    });
+  }
+
+}
+

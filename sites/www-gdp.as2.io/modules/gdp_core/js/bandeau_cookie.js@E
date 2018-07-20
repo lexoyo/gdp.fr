@@ -1,0 +1,44 @@
+$(document).ready(function() {
+  message = Drupal.t("display_message_cookie");
+
+  if (Drupal.settings.bandeau_cookie.display_type == 0) {
+    styles = 'text-align:center;padding:6px 0;display:block;position:fixed;width:100%;height: auto;overflow: visible;z-index: 2000;outline: 0px;left:0;bottom:0;font-size: 9px;';
+    styles += 'background-color:' + Drupal.settings.bandeau_cookie.background_color + ';';
+    html_band = '<div class="bandeau_cookie" style="' + styles + '">';
+    html_band += message + '<a href="' + Drupal.settings.bandeau_cookie.file_link + '" style="text-decoration:none;color:' + Drupal.settings.bandeau_cookie.link_color + '"> En savoir plus </a>';
+    html_band += '<span class="btn_cookie_ok bandeau_close">OK</span>';
+    html_band += '<span class="bandeau_close" style="display:block;float:right;margin-right:6px;cursor:pointer;">X</span>';
+    html_band += '</div>';
+    
+    $('body').append(html_band);
+    
+    $('.bandeau_close').click(function(){
+      $('.bandeau_cookie').slideUp();
+    }); 
+  }
+  else {
+    html_band = '<div class="bandeau_cookie popin">';
+    html_band += '<a href="' + Drupal.settings.bandeau_cookie.link + '" style="text-decoration:none;color:' + Drupal.settings.bandeau_cookie.link_color + '">' + message + '</a>';
+    html_band += '<a class="btn_cookie_ok" href="' + Drupal.settings.bandeau_cookie.file_link + '" target="_blank" >OK</a>';
+    html_band += '</div>';
+    
+    $('body').append(html_band);
+    
+    $('.bandeau_cookie').dialog({
+      autoOpen: true,
+      bgiframe: true,
+      dialogClass: 'box-info',
+      draggable: false,
+      width: '400px',
+      height: 'auto',
+      modal: true,
+      closeText: '', 
+      position: 'center',
+      resizable: true,
+      title: Drupal.t("title_info_cookie"),
+    }); 
+  }
+
+//  $('.bandeau_cookie').css('height', 70);
+});
+

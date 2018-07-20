@@ -1,0 +1,211 @@
+function overlabel() {
+  this.each(function(index) {
+    var label = $(this);
+
+    //Suppression des ":" de drupal
+    var labelval = $(this).html();
+    labelval = labelval.replace(':', ' ');
+
+    //fin suppresion
+    var field;
+    var id = this.htmlFor || label.attr('for');
+
+    if (id && (field = document.getElementById(id))) {
+      var control = $(field);
+      label.addClass("overlabel-apply");
+      label.css("display", "block");
+      if (field.value !== '') {
+        label.css("text-indent", "-10000px");
+      }
+
+      control.focus(function() {
+        label.css("text-indent", "-10000px");
+      }).blur(function() {
+        if (this.value === '') {
+          label.css("text-indent", "0px");
+        }
+      });
+
+      label.click(function() {
+        var label = $(this);
+        var field;
+        var id = this.htmlFor || label.attr('for');
+        if (id && (field = document.getElementById(id))) {
+          field.focus();
+        }
+      });
+    }
+  });
+}
+
+function formatItem(row) {
+  var search = '' + row + '';
+  var word = search.split('=>');
+  return "<div style=float:left>" + word[0] + "</div>" + "<div style=float:right><strong> " + word[1] + "</strong></div>";
+}
+
+function formatMatch(row) {
+  var search = '' + row + '';
+  var word = search.split('=>');
+  return word[0];
+}
+
+function formatResult(row) {
+  var search = "" + row + "";
+  var words = search.split('=>');
+  var term;
+  if (words[1] == 'Salle' || words[1] == 'Venue') {
+    var word = words[0].split('/');
+    //mantis 9274 les salles avec des - ne fonctionnent pas dans la recherche, je commente le replace - par vide
+    term = word[0].replace(/(\s*$)/gi, "").replace("+","");//.replace("-","");
+  } else {
+    term = words[0].replace(/(\s*$)/gi, "").replace("+","");
+  }
+  return term;
+}
+
+function divopen(obj) {
+  $(obj).slideDown("normal");
+}
+
+function divclose(obj) {
+  $(obj).slideUp("normal", function() {
+    $('#content').css('margin-top', '0px');
+  });
+}
+
+$(function() {
+  $('#edit-date-debut').keydown(function() {
+    return false;
+  });
+  $('#edit-date-fin').keydown(function() {
+    return false;
+  });
+});
+
+$(function() {
+  $('#edit-date-debut').datepicker({onSelect: function(dateText, inst) {
+      $("#advanced_form").find("label[for^=edit-date-debut]").overlabel();
+    }, duration: 'fast'});
+  $('#edit-date-fin').datepicker({onSelect: function(dateText, inst) {
+      $("#advanced_form").find("label[for^=edit-date-fin]").overlabel();
+    }, duration: 'fast'});
+});
+
+$(document).ready(function() {
+
+  $("#recherche-form").find("label[for^=edit]").overlabel();
+  $("#simplenews-subscription-manager-form").find("label[for^=edit-mail]").overlabel();
+  // recherche des touts les nodes indexés
+
+  // On the first focus.
+  $('#edit-value', this).attr('autocomplete', 'off').one('focus', function() {
+    var $this = $(this);
+    // Prefetch list of objects for this branch.
+    $.get(Drupal.settings.recherche.recherche_node_url, function(data) {
+      nod = data.split("|");
+      // Attach to autocomplete.
+      $this.autocomplete(nod, {
+        sort: function(a, b) {
+          return a.value.length - b.value.length;
+        },
+        matchContains: true,
+        formatItem: formatItem,
+        formatMatch: formatMatch, //Use this option if you want to limit the data that autocomplete searches for matches
+        formatResult: formatResult,
+        max: 200,
+        scroll: true,
+        width: 327,
+        scrollHeight: 200
+      }).result(function() {
+        $this.get(0).form.submit();
+      }).focus();
+    });
+  });
+  /*Cette fonction permet de changer la couleur des champs survolé en rose ou en blue en fontionc dela page sur laquel on se trouve*/
+  $('#edit-value', this).keyup(function() {
+    var gdp_club = Drupal.settings.page.gdp_club;
+    if ($(".ac_results").length >= 1)
+    {
+      //Cette variable vaut 1 si on est sur une page GDP_club /user ; 0 sinon
+      if (gdp_club == 1)
+      {
+        $(".ac_results").addClass('bleu');
+      }
+    }
+  });
+
+  $("#edit-value", this).result(function(event, data, formatted) {
+    var hidden = $(this).parent().next().find(">:input");
+    hidden.val((hidden.val() ? hidden.val() + ";" : hidden.val()) + data[1]);
+  });
+
+  /*FORMULAIRE DE RECHERCHE AVANCEE*/
+  /***********TRES IMPORTANT **************/
+  //On clone notre formulaire pour le faire aparaitre en haut du site
+  $("form#recherche-form").clone().insertBefore('#content');
+
+  //on supprime les elements dont on n'a pas besoin dans le formulaire cloné
+  $("form#recherche-form:eq(0)").find("#edit-value-wrapper").remove();
+  $("form#recherche-form:eq(0)").find("#edit-submit:eq(0)").remove();
+  $("form#recherche-form:eq(0)").find("#edit-submit-1:eq(0)").remove();
+
+  //on cache les elements dont on n'a pas besoin
+  $("#content form#recherche-form").find("#advanced_search_box").css({display: "none"});
+  /***************************************/
+
+  var $DivAdvancedSearchBox = $("#advanced_search_box");
+  var genre = $("#edit-genre").val();
+  var salle = $("#edit-salle").val();
+  var artiste = $("#edit-artiste").val();
+  var datedebut = $("#edit-date-debut").val();
+  var datefin = $("#edit-date-fin").val();
+
+  $('li#advanced_link').live('click', function() {
+    $('#content').css('margin-top', '0px');
+    if ($DivAdvancedSearchBox.is(":hidden")) {
+      divopen($DivAdvancedSearchBox)
+      $("#advanced_search_box").find("label[for^=edit-artiste],label[for^=edit-salle],label[for^=date-debut],label[for^=edit-date-fin]").overlabel();
+      //recherche des salles
+      var a = '';
+      $.get(Drupal.settings.recherche.recherche_artist_url, function(data) {
+        a = data.split(",");
+        $("#edit-artiste").autocomplete(a, {
+          matchContains: true,
+          scroll: true,
+          width: 270,
+          scrollHeight: 200
+        });
+      });
+      //recherche des salles
+      var s = '';
+      $.get(Drupal.settings.recherche.recherche_salle_url, function(data) {
+        s = data.split(",");
+        $("#edit-salle").autocomplete(s, {
+          matchContains: true,
+          scroll: true,
+          width: 270,
+          scrollHeight: 200
+        });
+      });
+      //recherche des genres
+      // var g = '';
+
+      // $.get(Drupal.settings.recherche.recherche_genre_url, function (data) {
+      // g = data.split(",");
+      // $("#edit-genre").autocomplete(g, {
+      // matchContains: true,
+      // scroll: true,
+      // width: 270,
+      // scrollHeight: 200
+      // });
+      // });
+    } else {
+      divclose($DivAdvancedSearchBox);
+    }
+  });
+  $('#advanced_close').click(function() {
+    divclose($DivAdvancedSearchBox);
+  });
+});
+

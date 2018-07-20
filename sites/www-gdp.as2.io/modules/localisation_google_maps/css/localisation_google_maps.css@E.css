@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+#map_acces {
+position : absolute;
+top : 10000px;
+background:url("i/bg_salle.png") no-repeat scroll left center;
+height : 378px; 
+width : 456px;
+*left : 0px
+}
+#map_canvas {
+height:360px;
+margin:6px 0 0 6px;
+*margin:6px 8px 0 6px;
+width:441px;
+}
+#close_salle {
+background:url("i/close_salle.png") no-repeat scroll left center transparent;
+cursor:pointer;
+float:right;
+height:30px;
+position:absolute;
+right:10px;
+top:30px;
+width:30px;
+}

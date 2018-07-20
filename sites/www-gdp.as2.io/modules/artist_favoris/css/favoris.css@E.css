@@ -1,0 +1,73 @@
+#favoris .titre_gdp {
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.favoris_wrapper {
+padding-bottom: 5px;
+    padding-top: 5px;
+  height: 100px;
+  width: 305px;
+  clear: both;
+  cursor: pointer;
+}
+
+.favoris_wrapper .favoris_photo {
+  float: left;
+  width: 80px;
+  height: 80px;
+  margin-right: 12px;
+}
+.favoris_wrapper .favoris_photo img {
+  width: 80px;
+  height: 80px;
+  border:1px solid #DDDADA;
+}
+.favoris_wrapper .favoris_datas {
+  float: left;
+  width: 213px;
+}
+
+.favoris_wrapper .favoris_datas .nb_classement1 {
+  font-size:48px;
+  line-height: 38px;
+  color:#D64889;
+  font-weight: bold;
+  font-family: Conv_HelveticaThn;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+.favoris_wrapper .favoris_datas .nb_classement {
+  font-size:48px;
+  line-height: 35px;
+  font-family: Conv_HelveticaThn;
+  font-weight: bold;
+  margin-bottom: 1px;
+  margin-top: 1px;
+  height:40px;
+}
+.favoris_wrapper a:hover p.nb_classement {
+  color:#D64889;
+}
+.favoris_wrapper a {
+  color:#dddada;
+}
+.favoris_wrapper .favoris_datas .favoris_nom {
+  font-size:17px;
+  font-family:Conv_HelveticaHv;
+  color:#000;
+  text-transform: uppercase;
+  margin-bottom:1px;
+  margin-top: 1px;
+ line-height:17px;
+}
+.favoris_wrapper .nb_like {
+background: url("i/heart_favorite.png") no-repeat scroll left top transparent;
+font-size:11px;
+color:grey;
+height:17px;
+line-height:17px;
+padding-left:18px;
+  margin-bottom:1px;
+  margin-top:1px;
+}

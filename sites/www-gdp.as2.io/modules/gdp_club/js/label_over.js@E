@@ -1,0 +1,50 @@
+jQuery.fn.overlabel = function() {
+    this.each(function(index) {
+        var label = $(this);
+	//Suppression des ":" de drupal
+	var labelval=$(this).html();
+	labelval=labelval.replace(':',' ');
+        labelval=labelval.replace('*',' ');
+	$(this).html(labelval);
+	//fin suppresion
+	var field;	
+        var id = this.htmlFor || label.attr('for');
+        if (id && (field = document.getElementById(id))) {
+            var control = $(field);
+            label.addClass("overlabel-apply");
+	    label.css("display","block");
+            if (field.value !== '') {
+                label.css("text-indent", "-10000px");
+            }
+            control.focus(function () {label.css("text-indent", "-10000px");}).blur(function () {
+                if (this.value === '') {
+                    label.css("text-indent", "0px");
+                }
+            });
+            label.click(function() {
+                var label = $(this); var field;
+                var id = this.htmlFor || label.attr('for');
+                if (id && (field = document.getElementById(id))) {
+                    field.focus();
+                }
+            });
+        }
+    });
+};
+
+
+
+$(function() 
+{
+	//Execute on page load
+	 $("#user-login-form").find("label[for^=edit]").hide();
+	 $("form#user-login").find("label[for^=edit]").hide();
+	 $("form#user-pass").find("label[for^=edit]").hide();
+	// $("#user-form").find("label[for^=edit]").overlabel();
+	// $("#user-register").find("label[for^=edit]").overlabel();
+  $("#registration-div").find("label[for^=edit-name],label[for^=edit-mail],label[for^=edit-pass],label[for^=edit-lastname],label[for^=edit-firstname],label[for^=edit-society],label[for^=edit-address],label[for^=edit-zipcode],label[for^=edit-city],label[for^=edit-telephone]").overlabel();
+	//$("#gdp-club-commentaire-news-form").find("label[for^=edit]").overlabel();	
+	$(".clubgdp_news_commentaires_form").find("label[for^=edit]").overlabel();	
+  $("#registration-div span.form-required").html('*');
+});
+

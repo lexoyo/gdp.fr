@@ -1,0 +1,72 @@
+// JavaScript Document
+
+$(function () {
+  var avanced_cart = function() {
+    $('.cart_item_remove').each(function () {
+     
+			var $a = $('<a />');
+			var idprefix = 'edit-items-';
+			var idsuffix = '-remove';
+      
+      $a.mouseover(function (){
+        $(this).addClass("remove_red");
+      });
+      $a.mouseout(function (){
+        $(this).removeClass("remove_red");
+      });
+      
+			$a.addClass('cart_item_delete remove_grey')
+				.click(function () {
+					var row = $(this).parents('.custom_cart_item');
+					var id = row.find('input').attr('id');
+					var index = id.substring(idprefix.length, id.length-idsuffix.length);
+					$.getJSON('/cart/remove/'+index, null, function (data) {
+						if (data.status == 1) {           
+							row.remove();
+							var i = 0;
+							$(".custom_cart_item").each(function () {
+								$(this).find(".cart_item_remove .form-submit").attr('id', idprefix + i + idsuffix);
+								i++;
+							});
+              if ($(".custom_cart_item").size() == 0) {
+                var $new_cart = data.html_data;            
+                $("#cart-form-pane").empty().append($new_cart);
+              }
+							$('div.custom_cart_footer_somme').html(data.total);
+              $.get(Drupal.settings.uc_cart.uc_cart_url, function(data) {
+                var $data = $(data);
+                $(".uc_cart_content").html($data);
+              });
+						}
+					});
+				});
+			$(this).append($a);    
+		});
+    
+  };
+  avanced_cart();
+
+  $('#edit-panes-delivery-delivery-country,#edit-panes-delivery-delivery-city').live('change', function() {
+   $('#edit-panes-quotes-quote-button').trigger('click');
+  });
+
+  $('#edit-panes-delivery-delivery-address-select').live('change', function() {
+    $('#edit-panes-quotes-quote-button').trigger('click');
+  });
+
+  $('#edit-panes-billing-copy-address').live('click', function() {
+    $('#edit-panes-quotes-quote-button').trigger('click');
+  });
+
+  //on lance le calcul des frais d'envoie
+  function updateQuotes() {
+   var nb_shipping_quotes = $('div#quote').find('input[name="panes[quotes][quotes][quote_option]"]').length;
+		if( nb_shipping_quotes > 0 ) {
+      clearInterval(shipping_quotes);
+		}else{
+      $('#edit-panes-quotes-quote-button').trigger('mousedown');
+      $('div#quote').trigger('click');
+    }   
+  }
+  var shipping_quotes = setInterval(updateQuotes,1000);
+});

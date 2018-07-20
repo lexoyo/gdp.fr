@@ -1,0 +1,715 @@
+$(document).ready(function() {
+
+  $("#club_link").click(function() {
+    var $uid = $(this).attr('uid');
+    if ($uid == 0) {
+      $.blockUI({
+      });
+    }
+  });
+
+  $.blockUI.defaults = {
+    // message displayed when blocking (use null for no message)
+    message: $("#user-login-form"),
+    // styles for the message when blocking; if you wish to disable
+    // these and use an external stylesheet then do this in your code:
+    // $.blockUI.defaults.css = {};
+    css: {
+      padding: 0,
+      margin: 0,
+      width: '625px',
+      height: '288px',
+      top: '40%',
+      left: '25%',
+      textAlign: 'center',
+      color: '#000',
+      border: 'none',
+      backgroundColor: '#fff',
+      cursor: 'normal',
+      'z-index': 3
+    },
+    showOverlay: true,
+    // styles for the overlay
+    overlayCSS: {
+      backgroundColor: '#000',
+      opacity: 0.6,
+      cursor: 'normal',
+      'z-index': 2
+    }
+  }
+
+  $(".user-info-popup #close_login").click(function() {
+    $.unblockUI()
+  });
+  $("li." + lang).css('font-weight', 'bold');
+  $('.res_sociaux li:eq(0)').addClass('first');
+  $('.footermap-item li:eq(5)').addClass('last');
+
+
+  //GESTION DU NOMBRE DE PHOTOS
+  $('.photo_wrapper .lightbox_thumbnail:eq(3)').addClass('last');
+  $('#more_photo').click(function() {
+    if ($('.photo_wrapper.nodisplay').is(":hidden")) {
+      $('.photo_wrapper.nodisplay').show("fast");
+      $(this).html(Drupal.t('Masquer les photos'));
+      Cufon.replace(".lien_grey", {fontFamily: 'Helvetica85Heavy'});
+      return false;
+    } else {
+      $('.photo_wrapper.nodisplay').slideUp();
+      $(this).html(Drupal.t('Voir les photos'));
+      Cufon.replace(".lien_grey", {fontFamily: 'Helvetica85Heavy'});
+      return false;
+    }
+  });
+
+
+  gdp_quickPager();
+
+  function gdp_quickPager() {
+    //On supprimer la barre de pagination
+    $(".simplePagerNav").remove();
+    //On la recrée
+    $("#bloc_commentaires").quickPager({
+      pageSize: 5,
+      currentPage: 1
+    });
+    //on supprimer l'affichage des nombres
+    $('.simplePagerNav li a').html('');
+    if (parseInt($("div#artiste_commentaires_wrapper div.titre_gdp").attr('data-nbcom')) <= 5) {
+      $("div.artiste_commentaires_pager div#gdp_pager div.pager_title").css({"display": "none"});
+    } else {
+      $("div.artiste_commentaires_pager div#gdp_pager div.pager_title").css({"display": "block"});
+    }
+  }
+
+
+
+  /******* PLAYER ******/
+  $('.titre_wrapper').mouseover(function() {
+    var $nid = $(this).attr('data-nid');
+    $('#player').find('.titre_texte').hide();
+    $("#titre_texte_" + $nid).show();
+  }).mouseout(function() {
+    $('#player').find('.titre_texte').hide();
+  });
+
+  $('.titre_status').click(function() {
+    if ($(this).attr('class') == 'titre_status play') {
+      var url = $(this).attr('data-url');
+      $(this).removeClass('play').addClass('stop');
+      document.getElementById("ANIM_FLASH").lecture(url);
+    } else {
+      $(this).removeClass('stop').addClass('play');
+      document.getElementById("ANIM_FLASH").stop();
+    }
+  });
+
+  /******* PAGERS *******/
+  $('.artiste_commentaires_pager .pager_page').click(function() {
+    $('.artiste_commentaires_pager').find('.active').addClass('inactive').removeClass('active');
+    $(this).removeClass('inactive').addClass('active');
+  });
+
+  $('.artiste_actualites_pager .pager_page').click(function() {
+    $('.artiste_actualites_pager').find('.active').addClass('inactive').removeClass('active');
+    $(this).removeClass('inactive').addClass('active');
+  });
+
+  var pager = function() {
+    var $page = $(this).attr('data-page');
+    var $tab = $('#touslesartistes_wrapper_gdp').activeTab();
+
+    if ($tab == 1) {
+      $action = '#actu';
+    } else {
+      $action = '#all';
+    }
+    $('#gdp-core-touslesartistes-form').attr("action", "/" + lang + "/artistes-gdp" + $action);
+    $('#gdp-core-touslesartistes-form').find('#edit-page').val($page);
+    $('#gdp-core-touslesartistes-form').submit();
+  };
+
+  $('.pager_page_inactive').click(pager);
+  $('.pager_next_active').click(pager);
+  $('.pager_prev_active').click(pager);
+
+
+  /****** FILTRE DE RECHERCHE ARTISTE *******/
+  $('#gdp-core-touslesartistes-form').find('select').change(function() {
+    $('#gdp-core-touslesartistes-form').submit();
+  });
+
+  /******AGRANDISSEMENT DU TEXTAREA EN FONCTION DU TEXTE TAPÉ*****************/
+  $(".clubgdp_news_commentaires_form").find("textarea[id^=edit]").each(function() {
+    $(this).elastic();
+  });
+
+  /****** GDPCLUB ACTUALITES COMMENTAIRES *******/
+  $('.clubgdp_news_nb_commentaires').click(function() {
+    var nid = $(this).attr('data-nid');
+    var status = $('#clubgdp_news_commentaires_wrapper_' + nid).css('display');
+
+    $('.clubgdp_news_commentaires_wrapper').hide();
+    if (status == 'none') {
+      $('#clubgdp_news_commentaires_wrapper_' + nid).show();
+    }
+  });
+
+  //Affichage du bouton suppression d'un artiste
+  $('.clubgdp_news_ligne').mouseover(function() {
+    var $nid = $(this).attr('data-nid');
+    $('.clubgdp_news_delete').hide();
+    $("#clubgdp_news_delete_" + $nid).show();
+  }).mouseout(function() {
+    $('.clubgdp_news_delete').hide();
+  });
+
+  $('.clubgdp_news_delete').click(function() {
+    var $nid = $(this).attr('data-nid');
+    var $uid = $(this).attr('data-uid'); //user->uid
+    var $paid = $(this).attr('data-paid'); //artist->nid or place->nid
+    $.ajax({
+      url: "/node/dellike.xhr/" + $paid + "/" + $uid,
+      success: function() {
+        //Suppression de toute les ligne d'actualité concernant l'artist ou la salle supprimé
+        $('.clubgdp_news_ligne').attr('data-paid', function() {
+          if ($(this).attr('data-paid') == $paid) {
+            $(this).remove();
+          }
+        });
+      }
+    });
+  });
+
+  /****** COMMENT NODE **********/
+  //Ajout d'un commentaire dans gdp_club
+  $("form[id^=gdp-club-commentaire-news-form]").submit(function() {
+    form_id = $(this).attr('id');
+    comment = $("#" + form_id + " textarea").val();
+    nid = $("#" + form_id + " textarea").attr('data-nid');
+    paid = $("#" + form_id + " textarea").attr('data-paid');
+    mode = 'news';
+    $.ajax({
+      type: "POST",
+      url: "/node/addcomment.xhr",
+      dataType: 'json',
+      //data: "comment="+comment+"&nid="+nid+"&mode="+mode,
+      data: "comment=" + comment + "&nid=" + paid + "&mode=" + mode,
+      success: function(data) {
+        if (data.status == 1) {
+          displayMessages(data.msg);
+          return false;
+        } else {
+          //Ajout du commentaires
+          //$("#clubgdp_news_commentaires_wrapper_"+nid+" > div.clubgdp_news_commentaires_form").before(data.msg);
+          $("#clubgdp_news_commentaires_wrapper_" + nid + " > div.clubgdp_news_commentaire").replaceWith(data.msg);
+          //On vide le textarea
+          $("#" + form_id + " textarea").val('');
+          //on execute la fonction display_delete_button afin que le nouveau commentaire rajouté puisse aussi être supprimé
+          $("#" + form_id + " label").overlabel();
+          $(".clubgdp_news_nb_commentaires").attr('data-nid', function() {
+            if ($(this).attr('data-nid') == nid) {
+              nbcom = parseInt($(this).attr('data-nbcom'));
+              $(this).text(nbcom + 1 + " commentaire(s)");
+            }
+          });
+          //Appel de la fonction display_delete_button & delete_comment à l'ajout dun commentaire 
+          display_delete_button();
+          delete_comment();
+        }
+      }
+    });
+    return false;
+  });
+
+  //Ajout d'un commentaire dans la page d'un node
+  $("form[id^=gdp-core-commentaires-form]").submit(function() {
+    form_id = $(this).attr('id');
+    comment = $("#" + form_id + " textarea").val();
+    nid = $("#" + form_id + " textarea").attr('data-nid');
+    mode = 'node';
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+      url: "/node/addcomment.xhr",
+      data: "comment=" + comment + "&nid=" + nid + "&mode=" + mode,
+      success: function(data) {
+        if (data.status == 1) {
+          displayMessages(data.msg);
+          return false;
+        } else {
+          //Ajout du commentaire
+          //on vérifie s'il y a déja des commentaires
+          if (($(".commentaire_wrapper").length) > 0) {
+            $(".commentaire_wrapper:first").before(data.msg);
+          } else {
+            $("#bloc_commentaires").append(data.msg);
+          }
+          //Appel de la fonction display_delete_button & delete_comment à l'ajout dun commentaire 
+          display_delete_button();
+          delete_comment();
+          //On vide le textarea
+          $("#" + form_id + " textarea").val('');
+          $("#" + form_id + " label").overlabel();
+          nbcom = parseInt($("#artiste_commentaires_wrapper .titre_gdp").attr('data-nbcom'));
+          $("#artiste_commentaires_wrapper .titre_gdp").text("Commentaires #" + (nbcom + 1));
+          $("#artiste_commentaires_wrapper .titre_gdp").attr('data-nbcom', (nbcom + 1));
+          gdp_quickPager();
+          //on remet à jour le nb de caratère utilisé
+          init_nb_caractere_use();
+        }
+      }
+    });
+    return false;
+  });
+
+  //Appel de la fonction display_delete_button & delete_comment à l'initialisation de la page 
+  display_delete_button();
+  delete_comment();
+  /*Cette fonction permet d'afficher la croix permettant de supprimer un commentaire*/
+  function display_delete_button() {
+    var current_user_uid = Drupal.settings.user.uid;
+    var current_user_role = Drupal.settings.user.role; //current_user_role=1 =>Admin-site droit de supressions sur tous les commentaires.
+    /*AFFICHAGE DE LA CROIX POUR LA PARTIE CLUB GDP*/
+    $('.clubgdp_news_commentaire').unbind()
+    $('.clubgdp_news_commentaire').mouseover(function() {
+      var $nid = $(this).attr('data-nid');
+      var $uid = $(this).attr('data-uid');
+      var $timestamp = $(this).attr('data-timestamp');
+      if ($uid == current_user_uid || current_user_role == 1) {
+        $('.clubgdp_news_commentaire_delete').hide();
+        $("#clubgdp_news_commentaire_delete_" + $timestamp).show();
+      }
+    }).mouseout(function() {
+      $('.clubgdp_news_commentaire_delete').hide();
+    });
+    /*AFFICHAGE DE LA CROIX POUR LA PARTIE NODE*/
+    $('.commentaire_wrapper').unbind();
+    $('.commentaire_wrapper').mouseover(function() {
+      var $nid = $(this).attr('data-nid');
+      var $uid = $(this).attr('data-uid');
+      var $timestamp = $(this).attr('data-timestamp');
+      if ($uid == current_user_uid || current_user_role == 1) {
+        $('.commentaire_delete').hide();
+        $("#commentaire_node_delete_" + $timestamp).show();
+      }
+    }).mouseout(function() {
+      $('.commentaire_delete').hide();
+    });
+
+  }
+
+  function delete_comment() {
+    //Suppression des commentaires dans gdp club
+    $('.clubgdp_news_commentaire_delete').unbind(); //on supprime tous les évenement associés à ces événement  pour éviter les redondonces d'evenement
+    $('.clubgdp_news_commentaire_delete').click(function() {
+      var $nid = $(this).attr('data-nid');
+      var $uid = $(this).attr('data-uid');
+      var $timestamp = $(this).attr('data-timestamp');
+      $.ajax({
+        type: "POST",
+        url: "/node/delcomment.xhr",
+        data: "uid=" + $uid + "&nid=" + $nid + "&timestamp=" + $timestamp,
+        success: function(msg) {
+          if (msg == 'OK') {
+            $('#clubgdp_news_commentaire_' + $timestamp).attr('data-nid', $nid).remove();
+            $(".clubgdp_news_nb_commentaires").attr('data-nid', function() {
+              if ($(this).attr('data-nid') == $nid) {
+                nbcom = parseInt($(this).attr('data-nbcom'));
+                if (nbcom == 1) {
+                  $(this).text(Drupal.t("Ajouter un commentaire"));
+                } else {
+                  $(this).text(nbcom - 1 + " " + Drupal.t("commentaire(s)"));
+                }
+              }
+            });
+          } else {
+            alert("Le message n'a pas été supprimé réesayer ultérieurement");
+          }
+        }
+      });
+      return false;
+    });
+    //Suppression des commentaires dans les nodes
+    $('.commentaire_delete').unbind();//on supprime tous les évenement associés à ces événement  pour éviter les redondonces d'evenement
+    $('.commentaire_delete').click(function() {
+      var $nid = $(this).attr('data-nid');
+      var $uid = $(this).attr('data-uid');
+      var $timestamp = $(this).attr('data-timestamp');
+      $.ajax({
+        type: "POST",
+        url: "/node/delcomment.xhr",
+        data: "uid=" + $uid + "&nid=" + $nid + "&timestamp=" + $timestamp,
+        success: function(msg) {
+          if (msg == 'OK') {
+            $('#commentaire_wrapper' + $timestamp).attr('data-nid', $nid).remove();
+            nbcom = parseInt($("#artiste_commentaires_wrapper .titre_gdp").attr('data-nbcom'));
+            $("#artiste_commentaires_wrapper .titre_gdp").text("Commentaires #" + (nbcom - 1));
+            $("#artiste_commentaires_wrapper .titre_gdp").attr('data-nbcom', (nbcom - 1));
+            //Pagination
+            gdp_quickPager();
+          } else {
+            alert("Le message n'a pas été supprimé réesayer ultérieurement");
+          }
+        }
+      });
+      return false;
+    });
+  }
+
+  /******  TRUNCAGE DES DESCRIPTIONS ET DES BIOGRAPHIES  *******/
+  $('.my_biographie').click(function() {
+    $(".hide_0:eq(0)").remove();
+  });
+
+  $(function() {
+    // $('.artiste_bio').truncatable({limit:600,more:'<span class="my_biographie">'+Drupal.t('LIRE LA BIOGRAPHIE')+'</span>', less: true, hideText: Drupal.t('MASQUER LA BIOGRAPHIE') });
+
+    $('.my_biographie').click(function() {
+      $(".more_0").trigger('click');
+      $(this).css('display', 'none');
+      $('.my_biographiehide').css('display', 'block');
+      return true;
+    });
+
+    $('.my_biographiehide').click(function() {
+      $(".hide_0").trigger('click');
+      $(this).css('display', 'none');
+      $('.my_biographie').css('display', 'block');
+      return true;
+    });
+    $('.artiste_bio').truncatable({limit: 600, more: '...', less: true, hideText: Drupal.t('MASQUER LA BIOGRAPHIE')});
+    /*$('.event_wrapper_even .event_description').truncatable({limit:400,more:'...', less: true });
+     $('.event_wrapper_even .event_description a').removeAttr("href").unbind().css('cursor','normal');
+     $('.event_wrapper_odd .event_description').truncatable({limit:550,more:'...', less: true });
+     $('.event_wrapper_odd .event_description a').removeAttr("href").unbind().css('cursor','normal');*/
+
+    if (($(".hiddenText_0").length) == 0) {
+      $('.my_biographie').css('display', 'none');
+    }
+
+    $('.more_0').click(function() {
+      $('.my_biographie').css('display', 'none');
+      $('.my_biographiehide').css('display', 'block');
+      return true;
+
+    });
+
+  });
+
+  //cette function permet de compter le nombre de caractère tappé ds le textarea
+
+  init_nb_caractere_use();
+  $("#edit-commentaire").keyup(function() {
+    count_caracter(this)
+  });
+  $("#edit-commentaire").change(function() {
+    count_caracter(this)
+  });
+
+  /*****ALERTE MAIL CLUB GDP COCHE AUTO DES CHECKBOX*******/
+  $('.clubgdp_alerte_liste .form-checkboxes').find('input#edit-mail-1').click(function(e) {
+    var $this = $(this);
+    var check_value = $this.attr('checked');
+    //$('#edit-mail-1-wrapper').nextAll().each(function(){console.log($(this).find('input[id^=edit-mail-]').attr('checked'))});
+    $('#edit-mail-1-wrapper').nextAll().each(function() {
+      if (check_value == true) {
+        $(this).find('input[id^=edit-mail-]').attr('checked', check_value);
+        $(this).find('input[id^=edit-mail-]').attr('disabled', 'disabled');
+      } else {
+        $(this).find('input[id^=edit-mail-]').attr('disabled', '');
+      }
+    });
+  });
+  //Initialistion du nombre de caractère à 0
+  function init_nb_caractere_use() {
+    $('.nb_char span').text(0);
+  }
+
+  //cette function compte et affiche le nombre de caractère tapé dans le textarea & empêche de saisir plus de 1000 caractères
+  function count_caracter(obj) {
+    max = 999;
+    var count = $(obj).val().length;
+    if (count >= max) {
+      obj.value = obj.value.substring(0, max);
+    }
+    $('.nb_char span').text(count);
+  }
+
+  function change_archives() {
+    var date = $('.touteslesdates_wrapper').find('select').val();
+    $('#artiste_seances_wrapper .seances_liste .seance_wrapper.archiv').each(function() {
+      if ($(this).attr('id') == date) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  }
+  ;
+
+  change_archives();
+  $('.touteslesdates_wrapper').find('select').change(change_archives);
+  $('#more_actu').click(function() {
+    if ($('#artiste_seances_wrapper .seances_liste .seance_wrapper.actu.nodisplay').is(":hidden")) {
+      $('#artiste_seances_wrapper .seances_liste .seance_wrapper.actu.nodisplay').show("fast");
+      $(this).html(Drupal.t('Masquer les séances'));
+      Cufon.replace(".lien_grey", {fontFamily: 'Helvetica85Heavy'});
+      return false;
+    } else {
+      $('#artiste_seances_wrapper .seances_liste .seance_wrapper.actu.nodisplay').slideUp();
+      $(this).html(Drupal.t('Voir toutes les séances'));
+      Cufon.replace(".lien_grey", {fontFamily: 'Helvetica85Heavy'});
+      return false;
+    }
+  });
+
+  $('#artiste_seances_wrapper').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow'}).mouseover(function() { Cufon.refresh(); });
+  $('#touslesartistes_wrapper_gdp').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow'}).mouseover(function() { Cufon.refresh(); });
+  $('#clubgdp_order_history_wrapper').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow'}).mouseover(function() { Cufon.refresh(); });
+
+  /****** M ALERTER NODE **********/
+  $("#malerter").click(function() {
+    var element = $(this);
+    var nid = element.attr('data-nid'); //node->id
+    var uid = element.attr('data-uid'); //user->uid
+    var action = element.attr('data-action'); //action
+    var type = element.attr('data-ntype'); //node->type
+    var title = element.attr('data-ntitle'); //node->title
+
+    if (uid == 0) {
+      var msg = {"status": [Drupal.t('Vous devez vous identifiez pour effectuer cette action')]};
+      displayMessages(msg);
+      return false;
+    } else {
+      $.ajax({
+        url: "/node/" + action + "like.xhr/" + nid + "/" + uid,
+        success: function() {
+
+          //mise à jour des attributs de l'element
+
+          if (type == 'artist' && action == 'add') {
+            var msg = {"status": [Drupal.t("L'artiste à bien été ajouté à vos favoris. <br> Rendez-vous sur <a href='/user/" + uid + "/news'>Club GDP</a> pour suivre les actualités de vos favoris.")]};
+            displayMessages(msg);
+          } else if (type == 'artist' && action == 'del') {
+            var msg = {"status": [Drupal.t("L'artiste  à bien été supprimé de vos favoris.")]};
+            displayMessages(msg);
+          } else if (type == 'place' && action == 'add') {
+            var msg = {"status": [Drupal.t("La salle à bien été ajouté de vos favoris.<br> Rendez-vous sur <a href='/user/" + uid + "/news'>Club GDP</a> pour suivre les actualités de vos favoris.")]};
+            displayMessages(msg);
+          } else if (type == 'place' && action == 'del') {
+            var msg = {"status": [Drupal.t("La salle à bien été supprimé de vos favoris.")]};
+            displayMessages(msg);
+          } else {
+            var msg = {"error": [Drupal.t("Error Veuillez contactez le Webmaster.")]};
+            displayMessages(msg);
+          }
+        }
+      });
+    }
+  });
+
+  if ($('#club_gdp').length > 0) {
+    $('#club_gdp').cycle({
+      speed: 2000,
+      timeout: 5000
+    });
+  }
+  //SURBRILLANCE DU NB CLASSEMENT LORS DU SURVOL DES ARTISTES FAVORIS
+  /*$(".favoris_wrapper").mouseover(function() { 
+   //console.log($("p.nb_classement"));
+   $("p.nb_classement").each(function(){$(this).css({"color":"#dddada"}) });
+   $(this).find("p.nb_classement").css({"color":"#D64889"});
+   });
+   $(".favoris_wrapper").mouseout(function() {    
+   $("p.nb_classement").each(function(){$(this).css({"color":"#dddada"}) });
+   });*/
+
+
+  //$('#edit-newsletters-1').attr('disabled','disabled');
+
+  function overlabel() {
+    this.each(function(index) {
+      var label = $(this);
+      //Suppression des ":" de drupal
+      var labelval = $(this).html();
+      labelval = labelval.replace(':', ' ');
+      $(this).html(labelval);
+      //fin suppresion
+      var field;
+      var id = this.htmlFor || label.attr('for');
+      if (id && (field = document.getElementById(id))) {
+        var control = $(field);
+        label.addClass("overlabel-apply");
+        label.css("display", "block");
+        if (field.value !== '') {
+          label.css("text-indent", "-10000px");
+        }
+        control.focus(function() {
+          label.css("text-indent", "-10000px");
+        }).blur(function() {
+          if (this.value === '') {
+            label.css("text-indent", "0px");
+          }
+        });
+        label.click(function() {
+          var label = $(this);
+          var field;
+          var id = this.htmlFor || label.attr('for');
+          if (id && (field = document.getElementById(id))) {
+            field.focus();
+          }
+        });
+      }
+    });
+  }
+  ;
+
+  /*$(".my_biographie").click( function () {
+   $.blockUI({
+   overlayCSS: { backgroundColor: '#fff' },      
+   message: $("#my_bio_hide"),
+   showOverlay: true,
+   css: { 
+   cusrsor: 'normal',
+   height : '200px',
+   width : '400px',
+   border: 'none'
+   } 
+   }); 
+   
+   setTimeout($.unblockUI,5000);    
+   });*/
+
+  $(".salle_meteo").click(function() {
+    $.blockUI({
+      message: $(".current"),
+      css: {
+        width: '420px',
+        height: '100px',
+        left: '45%'
+      }
+    });
+  });
+
+  $(".box-info-close-wrapper").click(function() {
+    $.unblockUI()
+  });
+
+  /****** LIKE NODE **********/
+  $("#like").click(function() {
+    var element = $(this);
+    var nid = element.attr('data-nid'); //node->id
+    var uid = element.attr('data-uid'); //user->uid
+    var action = element.attr('data-action'); //action
+    var type = element.attr('data-ntype'); //node->type
+    var artist_or_place = element.attr('data-ntitle'); //node->title
+    var newClass = 'like';
+    var newAction = 'add';
+    var newText = Drupal.t('AJOUTER FAVORIS');
+    var param_add = {"@artist_or_place": artist_or_place, "@uid": uid};
+    var param_del = {"@artist_or_place": artist_or_place};
+    var artist_add = Drupal.t("L'artiste '@artist_or_place' à bien été ajouté à vos favoris.<br> Rendez-vous sur <a href='/user/@uid/news'>Club GDP</a> pour suivre les actualités de vos favoris.", param_add);
+    var place_add = Drupal.t("La salle '@artist_or_place' à bien été ajouté à vos favoris.<br> Rendez-vous sur <a href='/user/@uid/news'>Club GDP</a> pour suivre les actualités de vos favoris.", param_add);
+    var artist_del = Drupal.t("L'artiste '@artist_or_place' à bien été supprimé à vos favoris.", param_del);
+    var place_del = Drupal.t("La salle '@artist_or_place' à bien été supprimé à vos favoris.", param_del);
+
+    if (action == 'add') {
+      newClass = 'dislike';
+      newAction = 'del';
+      newText = Drupal.t('SUPPRIMER FAVORIS');
+    }
+
+    if (uid == 0) {
+      var msg = {"status": [Drupal.t('Vous devez vous identifiez pour effectuer cette action')]};
+      displayMessages(msg);
+      return false;
+    } else {
+      $.ajax({
+        url: "/node/" + action + "like.xhr/" + nid + "/" + uid,
+        success: function() {
+
+          //mise à jour des attributs de l'element
+          element.attr('class', newClass);
+          element.attr('data-action', newAction);
+          element.html(newText);
+          if (type == 'artist' && action == 'add') {
+            var msg = {"status": [artist_add]};
+            displayMessages(msg);
+          } else if (type == 'artist' && action == 'del') {
+            var msg = {"status": [artist_del]};
+            displayMessages(msg);
+          } else if (type == 'place' && action == 'add') {
+            var msg = {"status": [place_add]};
+            displayMessages(msg);
+          } else if (type == 'place' && action == 'del') {
+            var msg = {"status": [place_del]};
+            displayMessages(msg);
+          } else {
+            var msg = {"error": [Drupal.t("Error Veuillez contactez le Webmaster.")]};
+            displayMessages(msg);
+          }
+        }
+      });
+    }
+  });
+
+  /****** SHARE NODE **********/
+  $('.my_favorite .share').click(function() {
+    if ($('#social_link').is(":hidden")) {
+      $('#social_link').show("slow");
+      return false;
+    } else {
+      $('#social_link').slideUp();
+      return false;
+    }
+  });
+
+  $('#commande').tabs({fxSlide: true, fxFade: true, fxSpeed: 'fast'});
+  if (location.pathname == '/fr/cart' || location.pathname == '/uk/cart') {
+    if (undefined != Drupal.settings.wlp_catalog.display_plan) {
+      if (Drupal.settings.wlp_catalog.display_plan == 1) {
+        $(".jqzoom").jqueryzoom({
+          xzoom: 136, //zooming div default width(default width value is 200)
+          yzoom: 145, //zooming div default width(default height value is 200)
+          offset: 10, //zooming div default offset(default offset value is 10)
+          position: "left", //zooming div position(default position value is "right")
+          preload: 1,
+          lens: 1,
+          alwaysDisplayZoom: true,
+          tabPlaces: Drupal.settings.wlp_catalog.zoomPlan.tabPlaces,
+          imgBall: Drupal.settings.wlp_catalog.zoomPlan.imgBallPath,
+          ballSize: Drupal.settings.wlp_catalog.zoomPlan.ballSize,
+          zoomTop: 0,
+          zoomLeft: 0,
+          coeff: Drupal.settings.wlp_catalog.zoomPlan.coeff
+        });
+      }
+    }
+  }
+
+  /******* LIMITE DE CARACTERE SUR LES CHAMPS ADRESSE LORS DU PASSAGE DE LA COMMANDE ********/
+  $("#edit-panes-delivery-delivery-street1, #edit-panes-delivery-delivery-street2, #edit-panes-billing-billing-street1, #edit-panes-billing-billing-street2").keyup(function(){
+    var nbre = $(this).val();
+    var lgh = nbre.length;
+    
+    if (lgh > 32) {
+      if(!$(this).parent().find('span').hasClass('error_limite')){
+        $(this).after("<span class='error_limite'>"+Drupal.t('Votre texte ne doit pas dépasser 32 caractères!')+"</span>");
+      }
+      $(this).val(nbre.substr(0, 32));
+    }else{
+      if($(this).parent().find('span').hasClass('error_limite')){
+        $(this).parent().find('span.error_limite').remove();
+      }
+    }
+  });
+
+
+  //Retour bac du checkout
+  $('#uc-cart-checkout-review-form #edit-back').click(function(event) {
+    event.preventDefault();
+    history.back();
+  });
+});
+

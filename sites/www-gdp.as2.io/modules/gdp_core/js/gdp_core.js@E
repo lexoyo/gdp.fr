@@ -1,0 +1,135 @@
+ $(document).ready(function(){
+      
+  function overlabel() {
+    this.each(function(index) {
+        var label = $(this);
+		//Suppression des ":" de drupal
+		var labelval=$(this).html();
+		labelval=labelval.replace(':',' ');
+		$(this).html(labelval);
+		//fin suppresion
+		var field;	
+        var id = this.htmlFor || label.attr('for');
+        if (id && (field = document.getElementById(id))) {
+            var control = $(field);
+            label.addClass("overlabel-apply");
+			label.css("display","block");
+            if (field.value !== '') {
+                label.css("text-indent", "-10000px");
+            }
+            control.focus(function () {label.css("text-indent", "-10000px");}).blur(function () {
+                if (this.value === '') {
+                    label.css("text-indent", "0px");
+                }
+            });
+            label.click(function() {
+                var label = $(this); var field;
+                var id = this.htmlFor || label.attr('for');
+                if (id && (field = document.getElementById(id))) {
+                    field.focus();
+                }
+            });
+          }
+      });
+  };
+
+  /*$(".my_biographie").click( function () {
+  $.blockUI({
+      overlayCSS: { backgroundColor: '#fff' },      
+      message: $("#my_bio_hide"),
+      showOverlay: true,
+      css: { 
+            cusrsor: 'normal',
+            height : '200px',
+            width : '400px',
+            border: 'none'
+           } 
+    }); 
+
+    setTimeout($.unblockUI,5000);    
+	});*/ 
+
+  $(".salle_meteo").click( function () {
+		$.blockUI({
+      message: $(".current"),
+      css: {
+        	width:  '420px',
+        	height: '100px',
+          left : '45%'
+      }
+		});
+	});	
+  
+  $(".box-info-close-wrapper").click( function () {  $.unblockUI() });
+
+	
+    /****** LIKE NODE **********/
+  $("#like").click( function () {
+      var element   = $(this);
+      var nid       = element.attr('data-nid'); //node->id
+      var uid       = element.attr('data-uid'); //user->uid
+      var action    = element.attr('data-action'); //action
+      var type      = element.attr('data-ntype'); //node->type
+      var artist_or_place = element.attr('data-ntitle'); //node->title
+      var newClass  = 'like';
+      var newAction = 'add';
+      var newText   = Drupal.t('AJOUTER FAVORIS');
+      var param_add = {"@artist_or_place":artist_or_place,"@uid":uid};
+      var param_del = {"@artist_or_place":artist_or_place};
+      var artist_add= Drupal.t("L'artiste '@artist_or_place' à bien été ajouté à vos favoris.<br> Rendez-vous sur <a href='/user/@uid/news'>Club GDP</a> pour suivre les actualités de vos favoris.",param_add);
+      var place_add = Drupal.t("La salle '@artist_or_place' à bien été ajouté à vos favoris.<br> Rendez-vous sur <a href='/user/@uid/news'>Club GDP</a> pour suivre les actualités de vos favoris.",param_add);
+      var artist_del= Drupal.t("L'artiste '@artist_or_place' à bien été supprimé à vos favoris.",param_del);
+      var place_del = Drupal.t("La salle '@artist_or_place' à bien été supprimé à vos favoris.",param_del);
+
+      if(action == 'add'){
+        newClass  = 'dislike';
+        newAction = 'del';
+        newText = Drupal.t('SUPPRIMER FAVORIS');
+      }
+      
+      if ( uid == 0 ){
+        var msg = {"status":[Drupal.t('Vous devez vous identifiez pour effectuer cette action')]};
+        displayMessages(msg);
+        return false;
+      }else {
+        $.ajax({
+        url: "/node/"+action+"like.xhr/"+nid+"/"+uid,
+        success: function(){
+     
+        //mise à jour des attributs de l'element
+          element.attr('class',newClass);
+          element.attr('data-action',newAction);
+          element.html(newText);
+		if(type=='artist' && action =='add'){
+			var msg = {"status":[artist_add]};
+        		displayMessages(msg);
+		}else if(type=='artist' && action =='del'){
+			var msg = {"status":[artist_del]};
+        		displayMessages(msg);
+		}else if(type=='place' && action =='add'){
+			var msg = {"status":[place_add]};
+        		displayMessages(msg);
+		}else if(type=='place' && action =='del'){
+			var msg = {"status":[place_del]};
+        		displayMessages(msg);
+		}else{
+			var msg = {"error":[Drupal.t("Error Veuillez contactez le Webmaster.")]};
+                        displayMessages(msg);
+		}
+          }
+        }); 
+      }
+  });
+  
+  /****** SHARE NODE **********/
+	$('.my_favorite .share').click(function() {
+    if ($('#social_link').is(":hidden")) {
+      $('#social_link').show("slow");
+      return false; 
+    } else {
+      $('#social_link').slideUp();
+      return false; 
+    }
+  });
+
+});

@@ -1,0 +1,44 @@
+jQuery.fn.overlabel = function() {
+    this.each(function(index) {
+        var label = $(this);
+	//Suppression des ":" de drupal
+	var labelval=$(this).html();
+	labelval=labelval.replace(':',' ');
+        labelval=labelval.replace('*',' ');
+	$(this).html(labelval);
+	//fin suppresion
+	var field;	
+        var id = this.htmlFor || label.attr('for');
+        if (id && (field = document.getElementById(id))) {
+            var control = $(field);
+            label.addClass("overlabel-apply");
+	    label.css("display","block");
+            if (field.value !== '') {
+                label.css("text-indent", "-10000px");
+            }
+            control.focus(function () {label.css("text-indent", "-10000px");}).blur(function () {
+                if (this.value === '') {
+                    label.css("text-indent", "0px");
+                }
+            });
+            label.click(function() {
+                var label = $(this); var field;
+                var id = this.htmlFor || label.attr('for');
+                if (id && (field = document.getElementById(id))) {
+                    field.focus();
+                }
+            });
+        }
+    });
+};
+
+
+
+$(function() 
+{
+	//Execute on page load
+	$("#edit-search-block-form-1-wrapper").find("label[for^=edit-search-block-form-1]").overlabel();
+  $('#contact-mail-page').find("label[for^=edit-name], label[for^=edit-mail], label[for^=edit-subject],label[for^=edit-message]").overlabel();
+
+});
+

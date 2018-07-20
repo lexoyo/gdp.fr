@@ -1,0 +1,56 @@
+$(document).ready(function() {
+
+	$('#alertesmail_submit,#newsletter_submit').each(function(){
+        $(this).after(unescape('%3Cspan class="button-submit-bleu"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.button-submit-bleu').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+	//Bouton de la page contact
+	//$('#contact_mail_page_submit,#edit-subscribe,#edit-unsubscribe').each(function(){
+	$('#contact_mail_page_submit').each(function(){
+        $(this).after(unescape('%3Cspan class="button-submit-red"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.button-submit-red').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+	$('#user_register_submit').each(function(){
+        $(this).after(unescape('%3Cspan class="user_register_submit"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.user_register_submit').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+	$('#simplenews-block-form-1 .lien_red').each(function(){
+        $(this).after(unescape('%3Cspan class="button-submit-red-simplenews"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.button-submit-red-simplenews').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+	$('#edit-subscribe,#edit-unsubscribe,#user-login #edit-submit,#user-pass #edit-submit').each(function(){
+        $(this).after(unescape('%3Cspan class="button-submit-red-simplenews-manager-form"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.button-submit-red-simplenews-manager-form').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+	$('.login_submit input').each(function(){
+        $(this).after(unescape('%3Cspan class="button-login-red"%3Eaa%3C/span%3E'));
+        $(this).hide();
+        $(this).next('span.button-login-red').text($(this).val()).click(function(){
+            $(this).prev('input.form-submit').click();
+        });
+    });
+
+
+        /* CUFON */
+        //Cufon.replace('.nb_classement', {  hover: true, hoverables: { p: true, a:true },fontFamily: 'Helvetica35Thin'});      
+        //Cufon.replace('.box-info-title h1',{fontFamily: 'Helvetica35Thin'});  
+        Cufon.replace('div.touslesartistes_artiste, .lien_grey, .pack_link, div.lien_red, div.seance_lieu, div.event_artiste, div.event_artiste_link, .event_reservation_link a, .favoris_nom,.artiste_name, .my_biographie,.my_biographiehide,.salle_name,#player .player_content .titre_wrapper .titre_datas .titre_artiste,.user-info-popup-right-title,.login_submit input,#simplenews-block-form-1 .lien_red,#profile_firstname,#profile_name,#clubgdp_alerte_wrapper .clubgdp_alerte_liste legend,.clubgdp_alerte_liste .form-submit, div.author_name, div.clubgdp_news_titre, div.clubgdp_news_texte, div.clubgdp_news_commentaire_nom,.seance_link a.lien_red,span.button-submit-bleu, span.button-submit-red,span.button-submit-red-simplenews,span.button-submit-red-simplenews-manager-form ,span.button-submit-grey,div.touslesartistes_wrapper .lien_red,#forgot_password_red,span.user_register_submit,div.seances_liste div.spectacle,div.actualite_wrapper div.actualite_titre,a#create_account_red.lien_red,span.button-login-red',{ fontFamily: 'Helvetica85Heavy'});
+        Cufon.replace('div.touslesartistes_genre, div.touslesartistes_statut, div.titre_gdp, div.seance_date,div.titre_privilege, div.event_place, .navigation_menu ul li a, #player .player_content .titre_wrapper .titre_datas .titre_titre,.user-info-popup-left p,#artiste_videos_wrapper .videos_liste .video_wrapper .video_titre, #clubgdp_alerte_wrapper #titre_gdp_bleu_content_area_user, #titre_gdp_rose_content_area_user, div#like, div.share, div.clubgdp_news_date, div.gdp_onglet_title, div.titre_wrapper_even, div.titre_wrapper_odd, div.actualite_wrapper div.actualite_date, div.textholder .carrousel-elt-title a', { fontFamily: 'Helvetica47LightCond'});
+        Cufon.replace('.atabs', {hover:true, fontFamily: 'Helvetica47LightCond'});
+
+});

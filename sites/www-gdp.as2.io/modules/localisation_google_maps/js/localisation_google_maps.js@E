@@ -1,0 +1,125 @@
+$(document).ready(function() {
+
+	/* Localisation par adresse */
+	function codeAddress(address) {
+		var geocoder;
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(-34.397, 150.644);
+		var myOptions = {
+			zoom: 15,
+			center: latlng,
+			mapTypeControlOptions: {
+			mapTypeIds: [google.maps.MapTypeId.ROADMAP,google.maps.MapTypeId.SATELLITE ,google.maps.MapTypeId.HYBRID ]
+			},
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		geocoder.geocode( { 'address': address}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+					map: map, 
+					position: results[0].geometry.location
+			});
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});
+	}
+
+/* localisation avec itinéraire avec comme point de départ l'adresse du domicile */
+function itineraire(home,adress) {
+	var directionDisplay;
+	var directionsService = new google.maps.DirectionsService();
+	var map;
+
+	directionsDisplay = new google.maps.DirectionsRenderer();
+	var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+	var myOptions = {
+zoom:7,
+		 mapTypeId: google.maps.MapTypeId.ROADMAP,
+		 center: chicago
+	}
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	directionsDisplay.setMap(map);
+
+	var start = home; // départ
+	var end = adress; //arrivé
+	var request = {
+origin:start, 
+			 destination:end,
+			 travelMode: google.maps.DirectionsTravelMode.DRIVING
+	};
+	directionsService.route(request, function(result, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(result);
+			}
+			});
+}
+
+/* localisation avec itinéraire commenté */
+function itinéaire_comment() {
+	var directionDisplay;
+	var directionsService = new google.maps.DirectionsService();
+	var map;
+	directionsDisplay = new google.maps.DirectionsRenderer();
+
+	var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+	var myOptions = {
+zoom:7,
+		 mapTypeId: google.maps.MapTypeId.ROADMAP,
+		 center: chicago
+	}
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	directionsDisplay.setMap(map);
+	directionsDisplay.setPanel(document.getElementById("directionsPanel")); // div d'affichage des données
+
+	var start = document.getElementById("start").value; //position de départ
+	var end = document.getElementById("end").value; //position d'arrivée
+	var request = {
+origin:start, 
+			 destination:end,
+			 travelMode: google.maps.DirectionsTravelMode.DRIVING
+	};
+	directionsService.route(request, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(response);
+			}
+			});
+}
+
+/*Affichage de la localisation */
+
+function close_salle() {
+	$.unblockUI();
+	$("#map_acces").css("top", "10000px");
+}
+
+$("#plan_acces").click( function () {
+		$("#map_acces").css("top", "0px");
+		var address = $(this).attr('loc');
+		codeAddress(address); 
+		$.blockUI({
+overlayCSS: { backgroundColor: '#000', cursor: 'normal'},      
+message: $("#map_acces"),
+showOverlay: true,
+css: { 
+cursor: 'normal',
+centerY : true,
+centerX: true,
+left : '45%',
+width : '445px',
+top : '245px',
+border: 'none',    
+position: 'absolute'
+} 
+}); 
+
+		$('.blockOverlay').click(function () {close_salle();} );    
+});
+
+
+$("#close_salle").click(function () {close_salle();} );    
+
+
+});

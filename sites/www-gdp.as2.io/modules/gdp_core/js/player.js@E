@@ -1,0 +1,3 @@
+function lectureSWF(a,b,c,d,e,f,g) {
+        document.getElementById("ANIM_FLASH").lecture(a+'||'+b+'||'+c+'||'+d+'||'+e+'||'+f+'||'+g);
+}

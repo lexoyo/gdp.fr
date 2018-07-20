@@ -1,0 +1,106 @@
+/*
+$.fn.carrousel = function (opts) {
+
+	opts = $.extend({
+		prevBtn:null,
+		nextBtn:null
+  }, opts);
+	
+	var carrouselObject = new Object();
+	var t;
+	
+	carrouselObject.slide = function ($direction, $ul) {
+
+		$active = $ul.find('> li.active');
+		switch ($direction) {
+			case 'left':
+				if ($active.is(":first-child")) {
+					$newactive = $ul.find("> li:last");
+				} else {
+					$newactive = $active.prev();
+				}
+				break;
+			case 'right':
+				if ($active.is(":last-child")) {
+					$newactive = $ul.find("> li:first");
+				} else {
+					$newactive = $active.next();
+				}
+				break;
+		}
+		$active.removeClass('active');
+		$newactive.addClass('active');
+		$x = $newactive[0].offsetLeft;
+
+		$ul.animate({left:-$x}, 500);
+
+	  carrouselObject.start();
+	};
+	
+	carrouselObject.start = function() {
+  	t = setInterval(function() { opts.nextBtn.trigger('click'); },5000);
+	};
+	carrouselObject.stop = function() {
+  	clearInterval(t);
+	};
+	
+	return this.each(function () {
+
+
+		$ul = $(this).find('> ul');
+		
+		$first = $ul.find('> li:first');
+		$first.addClass('active');
+		
+		$w = $(this).css('width');
+		$w = Number($w.substr(0, $w.indexOf("px")));
+		
+		$count = $ul.find("> li").size();
+		$ul.css('width', $count * $w + 'px');
+		
+		if (opts.prevBtn) {
+			opts.prevBtn.click(function () {
+			  carrouselObject.stop();
+				carrouselObject.slide('left', $ul);
+				return false;
+			});
+		}
+		if (opts.nextBtn) {
+			opts.nextBtn.click(function () {
+			  carrouselObject.stop();
+				carrouselObject.slide('right', $ul);
+				return false;
+			});
+		}
+    carrouselObject.start();
+	});
+
+};
+
+$(function () {
+	var t;
+	
+	var opts = {
+		prevBtn:$("#home-carrousel").find('a.arrow-prev'),
+		nextBtn:$("#home-carrousel").find('a.arrow-next'),
+		autoSlide: true
+	};
+	$("#home-carrousel").carrousel(opts);
+
+});
+*/
+
+
+$(document).ready(function () {
+  var opts = {
+    displayProgressBar:false,
+    displayThumbnailBackground: false,
+    thumbnailFontSize: '.9em',
+    displayTime: 6000
+  };
+
+  $(".infiniteCarousel").infiniteCarousel(opts);
+});
+
+
+

@@ -1,0 +1,782 @@
+#profile{
+  width:146px;
+  height:480px;
+  color:grey;
+}
+#profile_firstname{
+  font-family :Conv_HelveticaHv;
+  font-size :25px;
+  color:#000;
+  text-transform:uppercase;
+}
+#profile_name{
+  font-family :Conv_HelveticaHv;
+  font-size :25px;
+  color:#000;
+  text-transform:uppercase;
+}
+#profile_picture{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  /*width:146px;*/
+/* background:url("i/user_avatar.png") no-repeat scroll #FFFFFF;
+ border:1px solid #F3F3F1;*/
+}
+#profile_avatar img{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width:73px;
+  height:68px;
+/* background:url("i/user_avatar_small.png") no-repeat scroll #FFFFFF;
+ border:1px solid #F3F3F1;*/
+float:left;
+margin-right:30px;
+}
+#edit-avatar-wrapper{
+margin-top: 10px;
+}
+#edit-avatar-wrapper label{
+ display: block;
+    left: 400px;
+}
+#edit-picture-delete-wrapper {
+margin-top:0px;
+}
+#registration-div .title{
+margin-top: 10px;
+font-size:11px;
+font-weight:bold;
+}
+#registration-div .description{
+font-size:0.85em;
+width: 400px;
+}
+#simplenews-subscription-manager-form .lien_red {
+  border-width: 0;
+  margin-right: 10px;
+width: auto;
+}
+#simplenews-block-form-1 .lien_red {
+    border-width: 0;
+  margin-left: 30px;
+    margin-top: 7px;
+    width: 100px;
+}
+#simplenews-block-form-1 .lien_blue {
+    border-width: 0;
+  margin-left: 30px;	
+   margin-top: 15px;
+}
+#profile_menu{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width:146px;
+  height:auto;
+}
+#profile_menu ul li a{
+  font-family :Conv_HelveticaNeue-LightCond;
+  color:grey;
+  text-decoration:none ;
+  text-transform:uppercase;
+}
+#profile_menu  li a.active {
+ background:url("i/fleche.png") no-repeat scroll transparent;
+ font-weight:bold;
+ width:158px;
+ height:26px;
+ margin:0px;
+}
+#onglet_icone {
+ float: left;
+ margin-top: 5px;
+ margin-left:7px;
+}
+#onglet_title {
+ float: left;
+ margin-top: 5px;
+ margin-left:30px;
+ position:absolute;
+}
+#onglet_title.active {
+ background:url("i/fleche.png") no-repeat scroll transparent;
+ font-weight:bold;
+}
+#profile_menu ul{
+list-style:none;
+padding-left: 0;
+text-align:center;
+}
+#profile_menu div img{
+background-color:transparent;
+}
+.profile_onglet {
+ height: 26px;
+ border: 1px solid #f3f3f1;
+ margin-top: 5px;
+ width: 144px;
+}
+.profile_onglet_active {
+ height: 26px;
+ font-weight:bold;
+ margin-top: 5px;
+ width: 158px;
+ background:url("i/fleche.png") no-repeat scroll transparent;
+}
+#menu_avantage{
+ height:130px;
+ border: 1px solid #F3F3F1;
+ width: 144px;
+ border-top-width: 0;
+padding-top: 5px;
+line-height: 0;
+}
+#menu_avantage p{
+text-align: left;
+padding-left:10px;
+}
+.menu_avantage_blue{
+font-family:arial;
+color: #5EAAC1;
+font-size:14px;
+font-weight:bold;
+border-right-width: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+line-height: 20px;
+text-align: left;
+}
+.menu_avantage_grey{
+font-family :arial;
+color: grey;
+font-size: 11px;
+padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+line-height: 20px;
+}
+.avantages_content {
+margin-top: 25px;
+width: 470px;
+}
+.avantages_content fieldset{
+width:470px;
+}
+.avantages_wrapper {
+height:100px;
+}
+.avantages_photo {
+float:left;
+width: 50px;
+margin-left: 10px;
+margin-top: 5px;
+margin-bottom: 5px;
+text-align: center;
+}
+#avantages_user {
+line-height: 0;
+}
+.avantages_datas {
+float:left;
+padding-bottom: 10px;
+    margin-left: 30px;
+    margin-top: 5px;
+text-align: left;
+width: 380px;
+}
+.avantages_nb_point {
+font-family:Conv_HelveticaNeue-LightCond;
+  font-size :15px;
+  color:grey;
+  text-transform:uppercase;
+}
+.avantages_title {
+font-family :Conv_HelveticaHv;
+  font-size :15px;
+  color:#000;
+  text-transform:uppercase;
+}
+.avantages_desc {
+  font-size :11px;
+  color:#000;
+}
+.avantages_checkbox {
+ float:right;
+}
+.avantages_submit {
+ float:right;
+margin-top: 15px;
+}
+#user_register_submit, .user_register_submit {
+background-color: #D64889;
+border: 0 solid transparent;
+color: #FFFFFF;
+font-family: Conv_HelveticaHv;
+font-size: 10px;
+/*margin: 0 200px;*/
+padding: 5px;
+text-decoration: none;
+text-transform: uppercase;
+cursor:pointer;
+}
+#newsletter_submit {
+background-color: #5EAAC1;
+border: 0 solid transparent;
+color: #FFFFFF;
+font-family: Conv_HelveticaHv;
+font-size: 10px;
+padding: 5px;
+text-decoration: none;
+text-transform: uppercase;
+cursor:pointer;
+}
+#alertesmail_submit {
+background-color: #5EAAC1;
+border: 0 solid transparent;
+color: #FFFFFF;
+font-family: Conv_HelveticaHv;
+font-size: 10px;
+padding: 5px;
+text-decoration: none;
+text-transform: uppercase;
+cursor:pointer;
+}
+div#button_avantage{
+margin-top:20px
+}
+a#avantage_button{
+  color:#fff;
+ font-family :arial;
+background-color:#5eaac1;
+  font-size :11px;
+  font-weight :bold;
+  border: 0px solid transparent;
+  text-transform:uppercase;
+ padding-top:3px;
+ padding-bottom:3px;
+  text-decoration:none ;
+  padding-left: 5px;
+    padding-right: 5px;
+}
+
+.avantages_clearfix {
+border: 1px dotted black;
+clear: both;
+ border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+/*CSS du bloc alerte de la page USER*/
+.clear-block.block.block-simplenews {
+ /* background-color:#f3f3f1;*/
+}
+#block-gdp_core-14 .content {
+width:257px;
+  background-color:#f3f3f1;
+}
+#block-gdp_core-15 .content {
+width:257px;
+  background-color:#f3f3f1;
+margin-bottom: 30px;
+}
+/*.block-simplenews .content{
+  width:257px;
+  background-color:#f3f3f1;
+}*/
+#titre_gdp_bleu_content_area_user {
+  background-color:#5EAAC1;
+  clear:both;
+  color:#FFFFFF;
+  font-family:Conv_HelveticaNeue-LightCond;
+  font-size:20px;
+  line-height:26px;
+  margin-left:0;
+  margin-top:0;
+  padding: 3px 5px 0;
+  text-transform:uppercase;
+}
+#titre_gdp_rose_content_area_user {
+  background-color:#D64889;
+  clear:both;
+  color:#FFFFFF;
+  font-family:Conv_HelveticaNeue-LightCond;
+  font-size:20px;
+  line-height:26px;
+  margin-left:0;
+  margin-top:0;
+  padding: 3px 5px 0;
+  text-transform:uppercase;
+}
+.clear-block.block.block-simplenews h2{
+ background-color: #5EAAC1;
+    clear: both;
+    color: #FFFFFF;
+    font-family: Conv_HelveticaHv;
+    font-size: 15px;
+    height: 13px;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 5px;
+    text-transform: uppercase;1
+}
+#clubgdp_alerte_wrapper {
+padding-left: 20px;
+padding-top: 20px;
+padding-right: 20px;
+}
+#clubgdp_newsletter_wrapper {
+padding-left: 20px;
+padding-top: 20px;
+padding-right: 20px;
+}
+.clubgdp_order_history_content {
+margin-top: 10px;
+}
+#clubgdp_newsletter_wrapper fieldset {
+border:0px;
+}
+#clubgdp_alerte_wrapper #avantage_submit{
+float:left;
+margin-top: 20px;
+margin-bottom: 10px;
+}
+#titre_gdp_bleu_content_area_user_submit {
+background-color: #5EAAC1;
+clear: both;
+color: #FFFFFF;
+font-family: Conv_HelveticaHv;
+font-size: 11px;
+height: 13px;
+margin: 0 200px;
+padding: 5px;
+text-decoration: none;
+text-transform: uppercase;
+}
+#content_right_user{
+  height:auto;
+  float:right;
+  width:257px;
+ margin-top:6px;
+}
+#content_middle_user{
+  height:auto;
+  float:left;
+  width:500px;
+ margin-top: 7px;
+}
+#profile_edit_text_content {
+ margin-top:7px;
+ color:#000000;
+ font-family:Verdana,Arial;
+ font-size:12px;
+}
+#content_left_user{
+  height:auto;
+  width:176px;
+  float:left;
+}
+
+a.button {
+display:block;
+color:#555555;
+font-weight:bold;
+height:30px;
+line-height:20px;
+text-decoration:none;
+width:146px;
+}
+label.overlabel-apply {
+color: #999999;
+font-weight: normal;
+position: absolute;
+font-size: 11px;
+margin-left: 5px;
+margin-top: 5px;
+}
+/*-----CSS des Label pour login et password-----*/
+#user-login-form .login_name label {
+/*  left: 355px;*/
+/*  top: 95px;*/
+  padding-bottom: 5px;
+  font-size: 13px;
+  font-family: Arial;
+  line-height: 25px;
+  padding-left: 8px;
+}
+#user-login-form .login_pass label {
+/*  left: 355px;*/
+/*  top: 130px;*/
+  padding-bottom: 5px;
+  font-size: 13px;
+  font-family: Arial;
+  line-height: 25px;
+  padding-left: 8px;
+}
+#registration-div #edit-birthday-wrapper label {
+color: #666666;
+font-weight: normal;
+left: 215px;
+position: relative;
+top: 20px;
+width: 50%;
+display:none;
+}
+#edit-birthday-wrapper{
+ margin-top: 0;
+}
+#edit-civilite-wrapper select{ 
+background-color:#ffffff;
+/*order:2px solid #f3f3f9;*/
+border:1px solid #cccccc;
+margin-right: 10px;
+height: 27px;
+color: #999999;
+}
+#edit-favorite-language-wrapper select{ 
+background-color:#ffffff;
+/*border:2px solid #f3f3f9;*/
+border:1px solid #cccccc;
+margin-right: 10px;
+height: 27px;
+color: #999999;
+}
+#edit-birthday-wrapper select{
+height: 27px;
+background-color:#ffffff;
+border:1px solid #cccccc;
+margin-right: 10px;
+color: #999999;
+}
+#edit-country-wrapper select{
+height: 27px;
+background-color:#ffffff;
+/*border:2px solid #f3f3f9;*/
+border:1px solid #cccccc;
+margin-right: 10px;
+color: #999999;
+}
+#edit-country-wrapper label,
+#edit-society-wrapper label,
+#edit-civilite-wrapper label,
+#edit-favorite-language-wrapper label{
+display:none;
+}
+/*-----CSS du content are pour la page USER-----*/
+
+#content_area_user {
+width:500px;
+background-color:#ffffff;
+}
+
+#edit-civilite-wrapper input,
+#edit-birthday-wrapper input,
+#edit-year-wrapper input,
+#edit-month-wrapper input,
+#edit-day-wrapper input,
+#edit-name-wrapper input,
+#edit-lastname-wrapper input,
+#edit-firstname-wrapper input,
+#edit-mail-wrapper input,
+#edit-pass-wrapper input,
+#edit-favorite-language-wrapper input,
+#edit-society-wrapper input,
+#edit-address-wrapper input,
+#edit-city-wrapper input,
+#edit-zipcode-wrapper input,
+#edit-country-wrapper input,
+#edit-telephone-wrapper input,
+#edit-picture-upload-wrapper input{
+/*border:2px solid #f3f3f9;*/
+border:1px solid #cccccc;;
+color: #999999;
+padding-left: 10px;
+padding-top: 5px;
+}
+#registration-div .form-checkbox input{
+
+}
+#edit-picture-upload-wrapper {
+margin-top:5px;
+}
+/*#content_area_user select{
+background-color:#ffffff;
+border:2px solid #f3f3f9;
+margin-right: 10px;
+width: 60px;
+}*/
+#content_area_user textarea{
+width:310px;
+border:1px solid #cccccc;
+color: #999999;
+}
+#content_area_user fieldset{
+/*border:1px solid #cccccc;*/
+border:0px solid #cccccc;
+padding: 0px;
+}
+
+/*-----CSS pour le block alertes-----*/
+#alertes .content {
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-top: 35px;
+}
+
+/*************************
+  GDP CLUB ACTUALITES
+ ************************/
+#clubgdp_news_wrapper {
+  width: 470px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste {
+  margin-top: 15px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne {
+  border-bottom:1px solid #BFBFBF;
+  margin-bottom:10px;
+  padding-bottom:10px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_visuel {
+  float: left;
+  width: 59px;
+  margin-right: 9px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_visuel img{
+  width: 68px;
+  height: 68px;
+border: 1px solid #DDDADA;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas {
+  float: left;
+  width: 390px;
+  margin-left:10px;
+  position: relative;
+}
+
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_delete {
+  background: url(i/delete_artiste.jpg) no-repeat right center;
+  color: #5673a3;
+  font-size: 11px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  padding-right: 20px;
+  height:15px;
+  cursor: pointer;
+  width: auto;
+  display: none;
+}
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_delete {
+  background: url(i/delete_artiste.jpg) no-repeat right center;
+  color: #5673a3;
+  font-size: 11px;
+  cursor: pointer;
+  position: absolute;
+  /*position: relative;*/
+  /*top:1px ;*/
+    left: 320px;
+    right: 25px;
+    top: 100px
+  text-align: right;
+  padding-right: 20px;
+  height:15px;
+  cursor: pointer;
+  width: auto;
+  display: none;
+}
+.commentaire_wrapper .commentaire_delete {
+  background: url(i/delete_artiste.jpg) no-repeat right center;
+  color: #5673a3;
+  font-size: 11px;
+  cursor: pointer;
+  position: absolute;
+  /*top:1px ;*/
+    /*left: 320px;*/
+    left: 0px;
+    right: 25px;
+    top: 100px
+  text-align: right;
+  padding-right: 20px;
+  height:15px;
+  cursor: pointer;
+  width: 600px;
+  display: none;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_date {
+  font-family:Conv_HelveticaNeue-LightCond;
+  font-size: 15px; 
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_titre a {
+  font-family:Conv_HelveticaHv;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #000000;
+  cursor:pointer;
+  text-decoration: none;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_type,
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_nb_commentaires {
+  font-size: 10px;
+  font-family: Verdana;
+  font-size: 10px;
+  color: #45a7d4;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_nb_commentaires {
+  text-align: right;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_texte {
+  font-size: 11px;
+  /*font-family: Verdana;*/
+  font-family:Conv_HelveticaHv;
+  padding-top:5px;
+  color:#000000;
+ line-height: 11px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_texte p{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_commentaires_wrapper {
+  width: 371px;
+  margin-top: 5px;
+  display:none;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_header {
+  height: 12px;
+  background: url(i/clubgdp_news_commentaire_header.png) no-repeat center;
+}  
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas .clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_footer {
+  height: 8px;
+  background: url(i/clubgdp_news_commentaire_footer.png) no-repeat center;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire {  
+  background: url(i/clubgdp_news_commentaire_middle.png) repeat-y center;
+  padding: 8px;
+  margin-bottom: 3px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_avatar {
+  float: left;
+  width: 38px;
+  margin-right: 8px;
+}  
+.clubgdp_news_commentaire_avatar img {
+    width: 40px;
+    height: 40px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_infos {
+  float: left;
+  width: 308px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_infos .clubgdp_news_commentaire_nom {
+  font-family:Conv_HelveticaHv;
+  font-size: 14px;
+  text-transform: uppercase;
+}  
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_infos .clubgdp_news_commentaire_date {
+  color: #288dbb;
+  font-size: 10px;
+  font-family: Verdana;  
+}  
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaire .clubgdp_news_commentaire_infos .clubgdp_news_commentaire_texte {
+  color: #595252;
+  font-size: 11px;
+  font-family: Verdana;  
+  margin-top:5px;
+  padding:0;  
+}  
+  
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_form {  
+  background: url(i/clubgdp_news_commentaire_middle.png) repeat-y center;  
+  padding: 8px 8px 1px;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_form div {  
+  margin: 0;
+}
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_form input {  
+ /* width: 354px;
+  border: 1px solid #cdcdcd;*/
+}  
+#clubgdp_news_wrapper .clubgdp_news_liste .clubgdp_news_ligne .clubgdp_news_datas 
+.clubgdp_news_commentaires_wrapper .clubgdp_news_commentaires_form label {  
+  font-size: 13px;
+  font-family: Arial;
+  color: #a1a1a1;
+  padding-left:10px;
+  padding-top:0px;
+}  
+  
+ /*************************
+  GDP CLUB ALERTES
+ ************************/
+.clubgdp_alerte_liste {
+margin-top: 30px;
+}
+#clubgdp_alerte_wrapper .clubgdp_alerte_liste fieldset{
+border:0;
+margin-bottom: 0;
+padding-top: 0;
+margin-top: 0;
+}
+#clubgdp_alerte_wrapper .clubgdp_alerte_liste legend{
+border:0;
+color: #000000;
+font-family: Conv_HelveticaHv;
+/*  font-size: 25px;*/
+text-transform: uppercase;
+}
+#edit-newsletters-1-wrapper{
+margin-left:0px;
+/*display:none;*/
+}
+#edit-mail-1-wrapper {
+margin-left:0px;
+}
+#edit-mail-2-wrapper {
+margin-left:20px;
+}
+#edit-mail-3-wrapper {
+margin-left:20px;
+}
+#edit-mail-4-wrapper {
+margin-left:20px;
+}
+#edit-mail-5-wrapper {
+margin-left:20px;
+}
+#edit-mail-6-wrapper {
+margin-left:20px;
+}
+#edit-mail-7-wrapper {
+margin-left:20px;
+}
+.clubgdp_news_commentaires_form .form-submit {
+background: url("i/bouton_OK_bleu.png") no-repeat scroll left 2px transparent;
+border: 0 none;
+height: 28px;
+margin-left: -1px;
+padding-top: 24px;
+width: 34px;
+position: relative;
+top:-27px;
+float:right;
+} 
+
+#edit-day-wrapper,
+#edit-month-wrapper,
+#edit-year-wrapper{
+  float:left;
+}
